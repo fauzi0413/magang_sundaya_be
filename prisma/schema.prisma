@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Jangan lupa setelah tamabh DB baru langsung run "npx prisma db push"
+
+model user {
+  id             Int              @id @default(autoincrement())
+  username       String           @unique
+  password       String
+  role           String
+  token          String
+  expired_at     String
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @default(now())
+  cluster_detail cluster_detail[]
+}
+
+model login_logs {
+  id        Int      @id @default(autoincrement())
+  username  String
+  action    String
+  timestamp DateTime @default(now())
+}
+
+model Warehouse {
+  id            Int      @id @default(autoincrement())
+  sap_code      String
+  total_barang  Int
+  status_barang String
+  user          String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+}
+
+model warehouse_logs {
+  id            Int      @id @default(autoincrement())
+  id_data       Int
+  sap_code      String
+  total_barang  Int
+  status_barang String
+  action        String
+  user          String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+}
+
+model cluster_detail {
+  id             Int             @id @default(autoincrement())
+  provinsi       String
+  kabupaten_kota String
+  center_point   String
+  pic            String
+  contact        String
+  user           user            @relation(fields: [userid], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userid         Int
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @default(now())
+  cluster_stock  cluster_stock[]
+}
+
+model cluster_stock {
+  id            Int            @id @default(autoincrement())
+  cluster       cluster_detail @relation(fields: [id_cluster], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  id_cluster    Int
+  total_site    Int
+  sap_code      String
+  total         Int
+  status_barang String
+  user          String
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @default(now())
+}
+
+model cluster_stock_logs {
+  id            Int      @id @default(autoincrement())
+  id_data       Int
+  id_cluster    Int
+  total_site    Int
+  sap_code      String
+  total         Int
+  status_barang String
+  action        String
+  user          String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+}
+
+model material {
+  id         Int      @id @default(autoincrement())
+  sap_code   String
+  sn_code    String
+  status     String
+  user       String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model inventory {
+  id          Int      @id @default(autoincrement())
+  sap_code    String   @unique
+  name        String
+  status      String
+  description String
+  user        String
+  min_stock   Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+}
+
+model site_information {
+  id         Int    @id @default(autoincrement())
+  pr_code    String
+  site_name  String
+  id_cluster String
+  longitude  String
+  latitude   String
+}
