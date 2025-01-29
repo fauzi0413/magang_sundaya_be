@@ -1,5 +1,5 @@
 const prisma = require("../db");
-const { findWarehouse, findWarehouseById, insertWarehouse, editWarehouse, findWarehouseLogs, insertWarehouseLogs, editWarehouseLogs } = require("./warehouse.repository");
+const { findWarehouse, findWarehouseById, insertWarehouse, editWarehouse, findWarehouseLogs, insertWarehouseLogs, editWarehouseLogs, deleteWarehouse } = require("./warehouse.repository");
 
 const getAllWarehouses = async() => {
     const warehouses = await findWarehouse();
@@ -31,8 +31,7 @@ const createWarehouse = async (newWarehouse) => {
 const deleteWarehouseById = async (id) =>{
     // Untuk pengecakan data apakah ada data warehouse atau tidak sebelum didelete
     await getWarehouseById(id);
-
-    await deleteWarehouseById(id);
+    await deleteWarehouse(id);
 };
 
 const editWarehouseById = async (id, data) => {

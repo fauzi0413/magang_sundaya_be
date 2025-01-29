@@ -40,7 +40,7 @@ const deleteInventoryById = async (id) =>{
 };
 
 const editInventoryById = async (id, data) => {
-    await getInvetoryById(id)
+    await getInventoryById(id)
 
     const inventory = await editInvetory(id, data);
 

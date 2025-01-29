@@ -12,6 +12,11 @@ const loginUser = async (loginData) => {
     return login
 }
 
+const loginLogs = async (loginLogs) => {
+    const login_logs = await insertUserLogs(loginLogs);
+    return login_logs
+}
+
 const getAllUsers = async() => {
     const user = await findUser();
     return user;
@@ -53,4 +58,5 @@ module.exports = {
     deleteUserById,
     editUserById,
     loginUser,
+    loginLogs,
 }

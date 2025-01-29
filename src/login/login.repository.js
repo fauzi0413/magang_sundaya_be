@@ -17,7 +17,7 @@ const insertUserLogs = async (loginLogs) => {
     const login_logs = await prisma.login_logs.create({
         data:{
             username: loginLogs.username,
-            action: "login",
+            action: loginLogs.action,
         },
     });
 
