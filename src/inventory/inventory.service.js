@@ -1,5 +1,5 @@
 const prisma = require("../db");
-const { findInventory, findInventoryById, insertInvetory, deleteInvetory, editInvetory, findInventoryBySAP } = require("./inventory.repository");
+const { findInventory, findInventoryById, insertInvetory, editInvetory, findInventoryBySAP, deleteInventory } = require("./inventory.repository");
 
 const getAllInventorys = async() => {
     const inventory = await findInventory();
@@ -19,9 +19,10 @@ const getInventoryById = async (id) =>{
 const getInventoryBySAP = async (sap_code) =>{
     const inventory = await findInventoryBySAP(sap_code);
 
-    if(!inventory){
-        throw Error("Inventory not found")
-    }
+    // if(inventory == null){
+    //     console.log(inventory)
+    //     throw Error("Inventory not found")
+    // }
 
     return inventory
 };
@@ -34,8 +35,8 @@ const createInventory = async (newInventory) => {
 
 const deleteInventoryById = async (id) =>{
     // Untuk pengecakan data apakah ada data warehouse atau tidak sebelum didelete
-    await getInvetoryById(id);
-    await deleteInvetory(id);
+    await getInventoryById(id);
+    await deleteInventory(id);
 };
 
 const editInventoryById = async (id, data) => {

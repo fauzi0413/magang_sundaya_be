@@ -2,18 +2,13 @@
 
 const express = require("express");
 const { prisma } = require("../db");
-const { getAllUsers, getAllUsersLogs, createUser, deleteUserById, editUserById, getUserById } = require('./user.service');
+const { getAllUsers, createUser, deleteUserById, editUserById, getUserById } = require('./user.service');
 
 const router = express.Router();
 
 router.get("/", async (req, res)=>{
     const user = await getAllUsers();
     res.send(user);
-});
-
-router.get("/logs", async (req, res)=>{
-    const login_logs = await getAllUsersLogs();
-    res.send(login_logs);
 });
 
 router.get("/:id", async (req, res)=>{

@@ -19,7 +19,7 @@ const findInventoryById = async (id) => {
 };
 
 const findInventoryBySAP = async (newSAP) => {
-    const inventory = await prisma.inventory.findUnique({
+    const inventory = await prisma.inventory.findFirst({
         where:{
             sap_code: newSAP
         },
@@ -33,7 +33,7 @@ const insertInvetory = async (newInventory) => {
         data:{
             sap_code : newInventory.sap_code,
             name : newInventory.name,
-            status : newInventory.status,
+            status : "show",
             description : newInventory.description,
             min_stock : newInventory.min_stock,
             user : newInventory.user,
@@ -43,7 +43,7 @@ const insertInvetory = async (newInventory) => {
     return inventory
 };
 
-const deleteInvetory = async (id) => {
+const deleteInventory = async (id) => {
     await prisma.inventory.delete({
         where:{
             id: parseInt(id),
@@ -74,6 +74,6 @@ module.exports = {
     findInventoryById,
     findInventoryBySAP,
     insertInvetory,
-    deleteInvetory,
+    deleteInventory,
     editInvetory,
 };

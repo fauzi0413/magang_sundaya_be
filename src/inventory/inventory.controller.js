@@ -25,15 +25,23 @@ router.post("/", async (req, res) => {
     try {
         const newInventory = req.body;
         const match = await getInventoryBySAP(newInventory.sap_code);
-        
-        if((newInventory.sap_code == match.sap_code)){
-            return res.send("SAP Code a ready")
-        }
-        else{
+
+        if(match == null){
             const inventory = await createInventory(newInventory);
             res.send({
                 message: "Success create inventory!"
             });
+        }
+        else{
+            if(newInventory.sap_code == match.sap_code){
+                return res.send("SAP Code a ready")
+            }
+            else{
+                const inventory = await createInventory(newInventory);
+                res.send({
+                    message: "Success create inventory!"
+                });
+            }
         }
     } catch (error) {
         res.status(400).send(error.message)

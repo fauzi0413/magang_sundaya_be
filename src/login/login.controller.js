@@ -2,7 +2,7 @@
 require('dotenv').config();
 const express = require("express");
 const { prisma } = require("../db");
-const { loginUser } = require('./login.service');
+const { loginUser, getAllLoginLogs } = require('./login.service');
 const jsonwebtoken = require('jsonwebtoken');
 const { updateToken, findUser } = require('./login.repository');
 
@@ -48,6 +48,11 @@ router.post("/", async(req, res) => {
         // res.status(400).send(error.message)
     }
 })
+
+router.get("/logs", async (req, res)=>{
+    const login_logs = await getAllLoginLogs();
+    res.send(login_logs);
+});
 
 router.get("/refreshToken", async(res, req) => {
     try {

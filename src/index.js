@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 const app = express ();
 const cookieParser = require("cookie-parser")
 
+const cors = require("cors")
+app.use(cors())
 
 // import { verifyToken } from "./middleware/verifyToken";
 
@@ -33,7 +35,6 @@ app.use("/inventory", inventoryController);
 // MATERIAL REST API
 const materialController = require("./material/material.controller");
 app.use("/materials", materialController);
-
 
 // WAREHOUSE REST API
 const warehouseController = require("./warehouse/warehouse.controller");

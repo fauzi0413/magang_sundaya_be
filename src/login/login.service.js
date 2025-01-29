@@ -17,7 +17,7 @@ const getAllUsers = async() => {
     return user;
 };
 
-const getAllUsersLogs = async() => {
+const getAllLoginLogs = async() => {
     const user_logs = await findUserLogs();
     return user_logs;
 };
@@ -48,7 +48,7 @@ const editUserById = async (id, data) => {
 
 module.exports = {
     getAllUsers,
-    getAllUsersLogs,
+    getAllLoginLogs,
     getUserById,
     deleteUserById,
     editUserById,
